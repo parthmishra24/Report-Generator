@@ -1,5 +1,16 @@
 import questionary
+import json
+import os
 import sys
+
+# Load local vuln knowledge base
+def load_knowledgebase(path='vuln_knowledgebase.json'):
+    try:
+        with open(path, 'r') as file:
+            return json.load(file)
+    except Exception as e:
+        print(f"❌ Failed to load knowledgebase: {e}")
+        return {}
 
 def required_input(message):
     while True:
@@ -13,6 +24,9 @@ def required_input(message):
 
 def collect_vulnerabilities():
     vulnerabilities = []
+    knowledgebase = load_knowledgebase()
+
+    vuln_names = list(knowledgebase.keys()) + ["Other (Manual Entry)"]
 
     count_input = questionary.text("🔐 Enter number of vulnerabilities to report:").ask()
     if count_input is None:
@@ -28,11 +42,24 @@ def collect_vulnerabilities():
     for i in range(count):
         print(f"\n--- Vulnerability {i + 1} ---")
 
-        name = required_input("🛡️ Name:")
+        # Select or enter custom vuln name
+        name = questionary.select("🛡️ Select Vulnerability Name:", choices=vuln_names).ask()
+        if name is None:
+            print("\n🛑 Cancelled.")
+            sys.exit(0)
+
+        if name == "Other (Manual Entry)":
+            name = required_input("✏️ Enter custom vulnerability name:")
+            description = required_input("📝 Description:")
+            impact = required_input("💥 Impact:")
+            remediation = required_input("🛠️ Remediation:")
+        else:
+            auto = knowledgebase.get(name, {})
+            description = auto.get("description") or required_input("📝 Description:")
+            impact = auto.get("impact") or required_input("💥 Impact:")
+            remediation = auto.get("remediation") or required_input("🛠️ Remediation:")
+
         cwe_id = required_input("📚 CWE-ID (e.g., CWE-79):")
-        description = required_input("📝 Description:")
-        impact = required_input("💥 Impact:")
-        remediation = required_input("🛠️ Remediation:")
         affected_url = required_input("🌐 Affected URL:")
 
         severity = questionary.select(
@@ -51,7 +78,7 @@ def collect_vulnerabilities():
             print("\n🛑 Cancelled.")
             sys.exit(0)
 
-        # Multi-screenshot support
+        # Screenshot support
         screenshot_paths = []
         while True:
             add_more = questionary.confirm("📎 Do you want to add a screenshot for this vulnerability?").ask()
