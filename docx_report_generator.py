@@ -3,6 +3,7 @@ from docx.shared import Inches
 import os
 import datetime
 import questionary
+from style import custom_style  # ✅ Import your centralized style
 
 def generate_docx_report(vulnerabilities, template_path, output_path):
     try:
@@ -14,8 +15,8 @@ def generate_docx_report(vulnerabilities, template_path, output_path):
     # Auto-date in DD/MM/YYYY
     report_date = datetime.datetime.today().strftime("%d/%m/%Y")
 
-    # Ask only for target URL
-    target_url = questionary.text("🌐 Enter the target URL:").ask()
+    # Ask for target URL
+    target_url = questionary.text("🌐 Enter the target URL:", style=custom_style).ask()
 
     # Replace placeholders
     for paragraph in doc.paragraphs:
@@ -80,7 +81,7 @@ def generate_docx_report(vulnerabilities, template_path, output_path):
         doc.add_page_break()
 
     # Ask for file name
-    filename_input = questionary.text("📄 Enter custom report file name (without extension):").ask()
+    filename_input = questionary.text("📄 Enter custom report file name (without extension):", style=custom_style).ask()
     if filename_input and filename_input.strip():
         filename = f"{filename_input.strip()}.docx"
     else:
