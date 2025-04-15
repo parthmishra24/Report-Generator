@@ -1,32 +1,106 @@
-# VAPT Report Generator Tool
+# 🛡️ VAPT Report Generator & Vulnerability Knowledge Base (CLI Suite)
 
-A professional command-line tool built in Python to generate structured VAPT (Vulnerability Assessment & Penetration Testing) reports in DOCX format using a custom company report template.
-
----
-
-## Features
-
-- 🔐 Add one or more vulnerabilities via CLI
-- 📸 Upload multiple screenshots for each vulnerability
-- 📄 Automatically generates:
-  - Vulnerability summary table
-  - Full vulnerability details with impact, remediation, and evidence
-- 🗂️ Fully customizable report template (.docx)
+A professional CLI-based toolkit to streamline your **Vulnerability Assessment & Penetration Testing (VAPT)** workflow.  
+This tool helps you **document findings**, **generate clean DOCX reports**, and **manage your own AI-powered knowledge base** — all through a powerful Python terminal interface.
 
 ---
 
-## Requirements
+## ✨ Features
+
+### 📄 VAPT Report Generator
+- Generate professional DOCX reports using your own template
+- Input vulnerabilities one-by-one (bulk-friendly)
+- Auto-fill Description, Impact & Remediation from a local JSON knowledge base
+- Attach multiple screenshots per vulnerability
+- Export reports to `/reports/` directory
+- Fully CLI-driven
+
+### 🧠 Vulnerability Knowledge Base Manager
+- Add, view, edit, or delete vulnerabilities in a JSON format
+- Quick search by name (with autocomplete)
+- Deep keyword search (across all fields)
+- Save new vulns from `snortgen.py` or manage via `manage_kb.py`
+
+---
+
+## ⚙️ Prerequisites
 
 - Python 3.7+
-- Install dependencies:
+- Required Python packages:
 
 ```bash
 pip install python-docx questionary
 ```
+Place your custom DOCX template inside the templates/ folder or provide the path when prompted.
+
 ---
 
-## How To Use
-```
-python3 snortgen.py
-```
-- Answere the question
+🚀 How to Use
+
+1. 📄 Generate a VAPT Report
+
+python snortgen.py
+
+What it does:
+	•	Prompts for the path to your DOCX template
+	•	Asks for the number of vulnerabilities
+	•	Supports auto-filling from a local knowledge base
+	•	Supports bulk screenshots per vuln
+	•	Saves final report in /reports with a custom filename
+
+---
+
+2. 🧠 Manage the Knowledge Base
+
+python manage_kb.py
+
+CLI Options:
+	•	➕ Add a new entry
+	•	🔍 Quick search by name (autocomplete)
+	•	🧠 Deep keyword search (across all fields)
+	•	📖 View all entries
+	•	✏️ Edit an existing vulnerability
+	•	❌ Delete a vulnerability
+	•	🚪 Exit
+
+---
+
+📚 Vuln Knowledge Base JSON Format
+
+Your vuln_knowledgebase.json file looks like:
+
+{
+  "SQL Injection": {
+    "cwe_id": "CWE-89",
+    "description": "SQL Injection allows attackers to inject malicious SQL...",
+    "impact": "Leads to unauthorized access or full DB compromise.",
+    "remediation": "Use parameterized queries and avoid dynamic SQL."
+  }
+}
+
+When new custom vulnerabilities are entered via snortgen.py, you’re prompted to save them into this file automatically.
+
+---
+
+💡 Smart Autofill Features
+
+During report generation:
+	•	You select a vulnerability from an autocomplete list
+	•	If the entry exists in JSON → description, impact, remediation, and CWE-ID auto-fill
+	•	Otherwise, you enter manually and can choose to save it
+
+---
+
+📦 Output
+	•	Report is generated in .docx format using your template
+	•	Includes:
+	•	Vulnerability summary table
+	•	Detailed findings with screenshots
+	•	Saved inside /reports/ folder
+
+---
+
+👨‍💻 Author
+
+Parth Mishra | 
+Security Engineer | Red Team Enthusiast
