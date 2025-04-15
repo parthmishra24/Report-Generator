@@ -1,17 +1,26 @@
 import questionary
+import sys
 
 def required_input(message):
     while True:
         answer = questionary.text(message).ask()
-        if answer and answer.strip():
+        if answer is None:
+            print("\n🛑 Operation cancelled.")
+            sys.exit(0)
+        if answer.strip():
             return answer.strip()
         print("❗ This field is required. Please enter a valid value.\n")
 
 def collect_vulnerabilities():
     vulnerabilities = []
 
+    count_input = questionary.text("🔐 Enter number of vulnerabilities to report:").ask()
+    if count_input is None:
+        print("\n🛑 Cancelled.")
+        sys.exit(0)
+
     try:
-        count = int(required_input("🔐 Enter number of vulnerabilities to report:"))
+        count = int(count_input)
     except ValueError:
         print("❌ Please enter a valid number.")
         return []
@@ -30,23 +39,32 @@ def collect_vulnerabilities():
             "🚨 Severity:",
             choices=["Critical", "High", "Medium", "Low"]
         ).ask()
+        if severity is None:
+            print("\n🛑 Cancelled.")
+            sys.exit(0)
 
         status = questionary.select(
             "📌 Status:",
             choices=["Open", "Fixed", "Validated"]
         ).ask()
+        if status is None:
+            print("\n🛑 Cancelled.")
+            sys.exit(0)
 
-        # 🖼️ Collect multiple screenshot paths
+        # Multi-screenshot support
         screenshot_paths = []
         while True:
             add_more = questionary.confirm("📎 Do you want to add a screenshot for this vulnerability?").ask()
+            if add_more is None:
+                print("\n🛑 Cancelled.")
+                sys.exit(0)
             if not add_more:
                 break
             path = questionary.path("📁 Select screenshot file:").ask()
-            if path:
-                screenshot_paths.append(path.strip())
-            else:
-                print("❗ Screenshot path cannot be empty.")
+            if path is None:
+                print("\n🛑 Cancelled.")
+                sys.exit(0)
+            screenshot_paths.append(path.strip())
 
         vuln = {
             "name": name,
