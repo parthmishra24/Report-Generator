@@ -2,6 +2,7 @@ import questionary
 import json
 import os
 import sys
+from style import custom_style  # ✅ Import centralized style
 
 # Load local vuln knowledge base
 def load_knowledgebase(path='vuln_knowledgebase.json'):
@@ -22,7 +23,7 @@ def save_knowledgebase(kb, path='vuln_knowledgebase.json'):
 
 def required_input(message):
     while True:
-        answer = questionary.text(message).ask()
+        answer = questionary.text(message, style=custom_style).ask()
         if answer is None:
             print("\n🛑 Operation cancelled.")
             sys.exit(0)
@@ -35,7 +36,7 @@ def collect_vulnerabilities():
     knowledgebase = load_knowledgebase()
     vuln_names = list(knowledgebase.keys()) + ["Other (Manual Entry)"]
 
-    count_input = questionary.text("🔐 Enter number of vulnerabilities to report:").ask()
+    count_input = questionary.text("🔐 Enter number of vulnerabilities to report:", style=custom_style).ask()
     if count_input is None:
         print("\n🛑 Cancelled.")
         sys.exit(0)
@@ -53,7 +54,8 @@ def collect_vulnerabilities():
             "🛡️ Enter or choose Vulnerability Name:",
             choices=vuln_names,
             match_middle=True,
-            ignore_case=True
+            ignore_case=True,
+            style=custom_style
         ).ask()
 
         if name is None:
@@ -68,7 +70,7 @@ def collect_vulnerabilities():
             cwe_id = required_input("📚 CWE-ID (e.g., CWE-79):")
 
             # 💾 Ask to save to knowledge base
-            save_vuln = questionary.confirm("💾 Save this vulnerability to knowledge base for future use?").ask()
+            save_vuln = questionary.confirm("💾 Save this vulnerability to knowledge base for future use?", style=custom_style).ask()
             if save_vuln:
                 knowledgebase[name] = {
                     "cwe_id": cwe_id,
@@ -89,7 +91,8 @@ def collect_vulnerabilities():
 
         severity = questionary.select(
             "🚨 Severity:",
-            choices=["Critical", "High", "Medium", "Low"]
+            choices=["Critical", "High", "Medium", "Low"],
+            style=custom_style
         ).ask()
         if severity is None:
             print("\n🛑 Cancelled.")
@@ -97,7 +100,8 @@ def collect_vulnerabilities():
 
         status = questionary.select(
             "📌 Status:",
-            choices=["Open", "Fixed", "Validated"]
+            choices=["Open", "Fixed", "Validated"],
+            style=custom_style
         ).ask()
         if status is None:
             print("\n🛑 Cancelled.")
@@ -105,13 +109,13 @@ def collect_vulnerabilities():
 
         screenshot_paths = []
         while True:
-            add_more = questionary.confirm("📎 Do you want to add a screenshot for this vulnerability?").ask()
+            add_more = questionary.confirm("📎 Do you want to add a screenshot for this vulnerability?", style=custom_style).ask()
             if add_more is None:
                 print("\n🛑 Cancelled.")
                 sys.exit(0)
             if not add_more:
                 break
-            path = questionary.path("📁 Select screenshot file:").ask()
+            path = questionary.path("📁 Select screenshot file:", style=custom_style).ask()
             if path is None:
                 print("\n🛑 Cancelled.")
                 sys.exit(0)
