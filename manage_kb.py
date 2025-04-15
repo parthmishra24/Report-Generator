@@ -2,6 +2,7 @@ import json
 import questionary
 import os
 import sys
+from style import custom_style  # ✅ centralized style import
 
 KB_PATH = 'vuln_knowledgebase.json'
 
@@ -19,7 +20,7 @@ def save_knowledgebase(kb):
 
 def required_input(prompt):
     while True:
-        answer = questionary.text(prompt).ask()
+        answer = questionary.text(prompt, style=custom_style).ask()
         if answer is None:
             print("\n🛑 Cancelled.")
             sys.exit(0)
@@ -40,7 +41,7 @@ def add_new_entry(kb):
     print("\n➕ Add a New Vulnerability Entry\n")
     name = required_input("🛡️ Vulnerability name:")
     if name in kb:
-        overwrite = questionary.confirm(f"⚠️ '{name}' already exists. Overwrite?").ask()
+        overwrite = questionary.confirm(f"⚠️ '{name}' already exists. Overwrite?", style=custom_style).ask()
         if not overwrite:
             print("❌ Entry not added.")
             return
@@ -64,18 +65,19 @@ def edit_entry(kb):
         "✏️ Select vulnerability to edit:",
         choices=list(kb.keys()),
         match_middle=True,
-        ignore_case=True
+        ignore_case=True,
+        style=custom_style
     ).ask()
     if name is None:
         print("🛑 Cancelled.")
         return
     entry = kb[name]
     print("\n🔧 Leave fields blank to keep current values.\n")
-    new_name = questionary.text(f"Name [{name}]:").ask() or name
-    new_cwe = questionary.text(f"CWE-ID [{entry.get('cwe_id', '')}]:").ask() or entry.get('cwe_id', '')
-    new_desc = questionary.text(f"Description [{entry.get('description', '')[:30]}...]:").ask() or entry.get('description', '')
-    new_impact = questionary.text(f"Impact [{entry.get('impact', '')[:30]}...]:").ask() or entry.get('impact', '')
-    new_remediation = questionary.text(f"Remediation [{entry.get('remediation', '')[:30]}...]:").ask() or entry.get('remediation', '')
+    new_name = questionary.text(f"Name [{name}]:", style=custom_style).ask() or name
+    new_cwe = questionary.text(f"CWE-ID [{entry.get('cwe_id', '')}]:", style=custom_style).ask() or entry.get('cwe_id', '')
+    new_desc = questionary.text(f"Description [{entry.get('description', '')[:30]}...]:", style=custom_style).ask() or entry.get('description', '')
+    new_impact = questionary.text(f"Impact [{entry.get('impact', '')[:30]}...]:", style=custom_style).ask() or entry.get('impact', '')
+    new_remediation = questionary.text(f"Remediation [{entry.get('remediation', '')[:30]}...]:", style=custom_style).ask() or entry.get('remediation', '')
     if new_name != name:
         del kb[name]
     kb[new_name] = {
@@ -94,12 +96,13 @@ def delete_entry(kb):
         "❌ Select vulnerability to delete:",
         choices=list(kb.keys()),
         match_middle=True,
-        ignore_case=True
+        ignore_case=True,
+        style=custom_style
     ).ask()
     if name is None:
         print("🛑 Cancelled.")
         return
-    confirm = questionary.confirm(f"Are you sure you want to delete '{name}'?").ask()
+    confirm = questionary.confirm(f"Are you sure you want to delete '{name}'?", style=custom_style).ask()
     if confirm:
         del kb[name]
         save_knowledgebase(kb)
@@ -141,7 +144,8 @@ def quick_search_name(kb):
         "🔍 Select a vulnerability by name:",
         choices=list(kb.keys()),
         match_middle=True,
-        ignore_case=True
+        ignore_case=True,
+        style=custom_style
     ).ask()
     if name is None:
         print("\n🛑 Cancelled.")
@@ -163,10 +167,11 @@ def main():
                 "🔍 Quick search by name",
                 "🧠 Deep keyword search",
                 "📖 View vulnerability entries",
-                "✏️ Edit an entry",
+                "✏️  Edit an entry",
                 "❌ Delete an entry",
                 "🚪 Exit"
-            ]
+            ],
+            style=custom_style
         ).ask()
 
         if "Add a new entry" in action:
