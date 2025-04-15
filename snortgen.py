@@ -8,7 +8,7 @@ from docx_report_generator import generate_docx_report
 def print_banner():
     f = Figlet(font='slant')
     print(f.renderText("SnortGen"))
-    print("by Parth Mishra\n")
+    print("by Parth\n")
 
 def main():
     print_banner()
