@@ -1,10 +1,17 @@
 import os
+import sys
 import questionary
+from pyfiglet import Figlet
 from vuln_input_handler import collect_vulnerabilities
 from docx_report_generator import generate_docx_report
-import sys
+
+def print_banner():
+    f = Figlet(font='slant')
+    print(f.renderText("SnortGen"))
+    print("by Parth Mishra\n")
 
 def main():
+    print_banner()
     os.makedirs("reports", exist_ok=True)
 
     template_path = questionary.path("📄 Enter path to the report template (.docx):").ask()
