@@ -1,10 +1,10 @@
-# 🛡️ VAPT Report Generator Tool
+# VAPT Report Generator Tool
 
 A professional command-line tool built in Python to generate structured VAPT (Vulnerability Assessment & Penetration Testing) reports in DOCX format using a custom company report template.
 
 ---
 
-## 🚀 Features
+## Features
 
 - 🔐 Add one or more vulnerabilities via CLI
 - 📸 Upload multiple screenshots for each vulnerability
@@ -15,7 +15,7 @@ A professional command-line tool built in Python to generate structured VAPT (Vu
 
 ---
 
-## 🧰 Requirements
+## Requirements
 
 - Python 3.7+
 - Install dependencies:
@@ -25,7 +25,7 @@ pip install python-docx questionary
 ```
 ---
 
-## 🛠️ How To Use
+## How To Use
 ```
 python3 snortgen.py
 ```
