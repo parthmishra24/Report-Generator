@@ -26,6 +26,7 @@ pip install python-docx questionary
 ---
 
 ## 🛠️ How To Use
-
-- python main.py
+```
+python3 snortgen.py
+```
 - Answere the question
