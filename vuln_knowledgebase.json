@@ -1,0 +1,102 @@
+{
+    "SQL Injection": {
+      "description": "SQL Injection allows an attacker to manipulate backend SQL queries by injecting malicious input into application fields.",
+      "impact": "Can lead to unauthorized data access, modification, or deletion. In severe cases, complete database compromise is possible.",
+      "remediation": "Use parameterized queries or stored procedures. Avoid direct concatenation of user input into SQL statements."
+    },
+    "Cross-Site Scripting": {
+      "description": "XSS enables attackers to inject malicious scripts into content that is viewed by other users.",
+      "impact": "Can lead to session hijacking, defacement, redirection to malicious sites, or theft of sensitive data.",
+      "remediation": "Use proper output encoding, sanitize user input, and implement a strong Content Security Policy (CSP)."
+    },
+    "Broken Authentication": {
+      "description": "Occurs when authentication mechanisms are implemented incorrectly, allowing attackers to compromise credentials or sessions.",
+      "impact": "Leads to account takeover, privilege escalation, and unauthorized access to sensitive resources.",
+      "remediation": "Use strong password policies, multi-factor authentication, and secure session handling."
+    },
+    "Insecure Direct Object Reference": {
+      "description": "IDOR allows attackers to access unauthorized resources by manipulating direct object references like IDs in URLs.",
+      "impact": "Results in data leakage or unauthorized resource access.",
+      "remediation": "Implement access control checks on the backend and avoid exposing direct object references."
+    },
+    "Security Misconfiguration": {
+      "description": "Refers to improperly configured security settings across applications, frameworks, servers, or databases.",
+      "impact": "Can lead to data exposure, server compromise, or full application takeover.",
+      "remediation": "Harden configurations, disable unused features, enforce least privilege, and review default settings."
+    },
+    "Sensitive Data Exposure": {
+      "description": "Sensitive data is exposed due to lack of encryption, poor storage, or improper access control.",
+      "impact": "Leads to identity theft, fraud, or compliance violations (e.g., GDPR, HIPAA).",
+      "remediation": "Encrypt data at rest and in transit, avoid sensitive data storage when possible, and enforce strict access controls."
+    },
+    "XML External Entity Injection": {
+      "description": "XXE attacks exploit XML parsers that allow external entities to be included in XML documents.",
+      "impact": "Can lead to file disclosure, SSRF, or remote code execution.",
+      "remediation": "Disable DTDs and external entity resolution in XML parsers. Use safer data formats like JSON."
+    },
+    "Cross-Site Request Forgery": {
+      "description": "CSRF forces a user’s browser to perform unwanted actions in a web app where the user is authenticated.",
+      "impact": "Can lead to unauthorized actions like data changes or fund transfers without user consent.",
+      "remediation": "Use anti-CSRF tokens, same-site cookies, and confirm sensitive actions via user interaction."
+    },
+    "Directory Traversal": {
+      "description": "Allows attackers to access files and directories outside of the intended root directory.",
+      "impact": "Can expose sensitive files like credentials or config files.",
+      "remediation": "Sanitize file path inputs and use secure file access libraries."
+    },
+    "Unrestricted File Upload": {
+      "description": "Applications allow file uploads without proper validation, risking code execution or storage of malware.",
+      "impact": "Can result in server-side code execution or compromise of stored data.",
+      "remediation": "Validate file types, enforce strict MIME checks, rename files, and store uploads outside the web root."
+    },
+    "Command Injection": {
+      "description": "An attacker injects and executes arbitrary system commands via vulnerable application inputs.",
+      "impact": "Can lead to full system compromise, data theft, or lateral movement.",
+      "remediation": "Avoid shell commands; use language-specific safe libraries and input validation."
+    },
+    "Server-Side Request Forgery": {
+      "description": "SSRF tricks the server into making requests to unintended internal or external systems.",
+      "impact": "Can result in internal service discovery, data exfiltration, or cloud metadata exposure.",
+      "remediation": "Validate and sanitize URLs, restrict outbound traffic, and use allowlists."
+    },
+    "Clickjacking": {
+      "description": "Tricks users into clicking elements in a hidden or disguised way using iframes or CSS.",
+      "impact": "Can trigger actions like form submissions or settings changes without user awareness.",
+      "remediation": "Use X-Frame-Options headers or Content Security Policy to prevent embedding."
+    },
+    "Open Redirect": {
+      "description": "Allows attackers to redirect users to malicious websites by manipulating URL parameters.",
+      "impact": "Can be used for phishing or malware delivery.",
+      "remediation": "Validate and restrict redirect URLs to trusted domains only."
+    },
+    "Host Header Injection": {
+      "description": "Manipulates the Host header to poison caches, bypass filters, or perform web cache deception.",
+      "impact": "Can lead to password reset poisoning, cache poisoning, and redirect hijacks.",
+      "remediation": "Use absolute URLs from trusted sources and validate Host headers."
+    },
+    "Information Disclosure": {
+      "description": "Occurs when an application unintentionally exposes sensitive data like version info or credentials.",
+      "impact": "Helps attackers craft specific exploits or bypass protections.",
+      "remediation": "Disable verbose errors, remove debug information, and apply least privilege access."
+    },
+    "Broken Access Control": {
+      "description": "Improper enforcement of user permissions allows unauthorized access to data or actions.",
+      "impact": "Can lead to data leakage, privilege escalation, or resource manipulation.",
+      "remediation": "Use server-side access control checks and avoid client-side controls."
+    },
+    "Mass Assignment": {
+      "description": "Mass assignment lets users modify restricted fields in data objects via tampered input.",
+      "impact": "Can result in privilege escalation or data tampering.",
+      "remediation": "Use whitelisting to define acceptable fields during object binding."
+    },
+    "JWT Token Misconfiguration": {
+      "description": "Improper JWT handling (e.g., none algorithm or no expiry) can be exploited by attackers.",
+      "impact": "Leads to authentication bypass or session hijacking.",
+      "remediation": "Always validate tokens, use strong signing algorithms, and enforce expiration."
+    },
+    "Improper Input Validation": {
+      "description": "Failure to validate or sanitize user input properly allows attackers to manipulate application behavior.",
+      "impact": "Can lead to injection, XSS, path traversal, or logic bypass.",
+      "remediation": "Implement strict input validation (allowlists preferred), and escape/encode output properly."
+    }
+  }
