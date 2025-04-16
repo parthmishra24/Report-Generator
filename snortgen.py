@@ -75,6 +75,17 @@ def main():
         template_path = prompt_template_path()
         vulns = collect_vulnerabilities()
         if vulns:
+            print("\n📋 Vulnerability Summary:")
+            for i, v in enumerate(vulns, 1):
+                print(f"\n{i}. {v['name']} ({v['severity']})")
+                print(f"   Affected URL: {v['affected_url']}")
+                print(f"   CWE: {v['cwe_id']}")
+                print(f"   Status: {v['status']}")
+            confirm = questionary.confirm("📝 Proceed to generate the report?", style=custom_style).ask()
+            if not confirm:
+                print("❌ Report generation cancelled.")
+                sys.exit(0)
+
             generate_docx_report(
                 vulnerabilities=vulns,
                 template_path=template_path,
