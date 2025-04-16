@@ -1,5 +1,5 @@
 # 🛡️ VAPT Report Generator & Vulnerability Knowledge Base (CLI Suite)
-
+![Alt text](https://github.com/your-username/your-repo-name/blob/main/assets/demo.png?raw=true)
 A professional CLI-based toolkit to streamline your **Vulnerability Assessment & Penetration Testing (VAPT)** workflow.  
 This tool helps you **document findings**, **generate clean DOCX reports**, and **manage your own AI-powered knowledge base** — all through a powerful Python terminal interface.
 
@@ -21,6 +21,19 @@ This tool helps you **document findings**, **generate clean DOCX reports**, and 
 - Deep keyword search (across all fields)
 - Save new vulns from `snortgen.py` or manage via `manage_kb.py`
 
+### 📄 CSV Method
+SnortGen supports automated vulnerability reporting using a CSV file for bulk import.
+A pre-built template is already included in the root directory:
+```
+📁 snortgen_template.csv
+```
+
+#### ✏️ How to Use:
+1. Open snortgen_template.csv in any spreadsheet editor (Excel, Google Sheets, etc.).
+2. Fill in the required vulnerability details as per the headers: name, cwe_id, description, impact, remediation, affected_url, severity, status, and screenshots
+3. For multiple screenshots, separate file paths using a semicolon ```;```.
+4. Save the file and run the tool: ```python3 snortgen.py```.
+5. Enter the full path to your .csv file when asked.
 ---
 
 ## ⚙️ Prerequisites
