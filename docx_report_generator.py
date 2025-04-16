@@ -1,6 +1,7 @@
 from docx import Document
 from docx.shared import Inches
 import os
+import sys
 import datetime
 import questionary
 from style import custom_style  # ✅ Import your centralized style
@@ -95,3 +96,15 @@ def generate_docx_report(vulnerabilities, template_path, output_path):
         print(f"✅ DOCX report saved to: {save_path}")
     except Exception as e:
         print(f"❌ Failed to save report: {e}")
+
+    # Ask user if they want to open the report
+    open_report = questionary.confirm("📂 Do you want to open the generated report?", style=custom_style).ask()
+    if open_report:
+        try:
+            import subprocess
+            if os.name == 'nt':
+                os.startfile(save_path)
+            elif os.name == 'posix':
+                subprocess.run(['open' if sys.platform == 'darwin' else 'xdg-open', save_path])
+        except Exception as e:
+            print(f"⚠️ Could not open the report: {e}")
