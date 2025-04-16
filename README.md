@@ -1,5 +1,5 @@
 # 🛡️ VAPT Report Generator & Vulnerability Knowledge Base (CLI Suite)
-![Alt text](https://github.com/your-username/your-repo-name/blob/main/assets/demo.png?raw=true)
+![Alt text](https://github.com/parthmishra24/Report-Generator/snortgen.png?raw=true)
 A professional CLI-based toolkit to streamline your **Vulnerability Assessment & Penetration Testing (VAPT)** workflow.  
 This tool helps you **document findings**, **generate clean DOCX reports**, and **manage your own AI-powered knowledge base** — all through a powerful Python terminal interface.
 
