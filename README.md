@@ -39,10 +39,13 @@ A pre-built template is already included in the root directory:
 ## ⚙️ Prerequisites
 
 - Python 3.7+
+
+## ⬇️ Installation
+
 - Required Python packages:
 
 ```bash
-pip install python-docx questionary
+pip install -r requirements.txt
 ```
 Place your custom DOCX template inside the templates/ folder or provide the path when prompted.
 
