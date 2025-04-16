@@ -1,0 +1,2 @@
+name,cwe_id,description,impact,remediation,affected_url,severity,status,screenshots
+SQL Injection,CWE-89,Unsanitized input in login form allows SQL Injection.,Attacker can bypass authentication and access sensitive data.,Use parameterized queries and input validation.,https://example.com/login,High,Open,/Users/parthmishra/Downloads/zsbb.png
