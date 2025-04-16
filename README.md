@@ -38,81 +38,63 @@ A pre-built template is already included in the root directory:
 
 ## ⚙️ Prerequisites
 
-- Python 3.7+
+Python 3.7+
 
 ## ⬇️ Installation
 
-- Required Python packages:
+Required Python packages:
 
 ```bash
 pip install -r requirements.txt
 ```
-Place your custom DOCX template inside the templates/ folder or provide the path when prompted.
 
 ---
 
-🚀 How to Use
+## 🚀 Usage
 
 1. 📄 Generate a VAPT Report
-
-python snortgen.py
-
+```
+python3 snortgen.py
+```
 What it does:
-	•	Prompts for the path to your DOCX template
-	•	Asks for the number of vulnerabilities
-	•	Supports auto-filling from a local knowledge base
-	•	Supports bulk screenshots per vuln
-	•	Saves final report in /reports with a custom filename
+- Prompts for the path to your DOCX template
+- Asks for the number of vulnerabilities
+- Supports auto-filling from a local knowledge base
+- Supports bulk screenshots per vuln
+- Saves final report in /reports with a custom filename
 
 ---
 
 2. 🧠 Manage the Knowledge Base
-
-python manage_kb.py
-
+```
+python3 manage_kb.py
+```
 CLI Options:
-	•	➕ Add a new entry
-	•	🔍 Quick search by name (autocomplete)
-	•	🧠 Deep keyword search (across all fields)
-	•	📖 View all entries
-	•	✏️ Edit an existing vulnerability
-	•	❌ Delete a vulnerability
-	•	🚪 Exit
-
----
-
-📚 Vuln Knowledge Base JSON Format
-
-Your vuln_knowledgebase.json file looks like:
-
-{
-  "SQL Injection": {
-    "cwe_id": "CWE-89",
-    "description": "SQL Injection allows attackers to inject malicious SQL...",
-    "impact": "Leads to unauthorized access or full DB compromise.",
-    "remediation": "Use parameterized queries and avoid dynamic SQL."
-  }
-}
-
-When new custom vulnerabilities are entered via snortgen.py, you’re prompted to save them into this file automatically.
+- ➕ Add a new entry
+- 🔍 Quick search by name (autocomplete)
+- 🧠 Deep keyword search (across all fields)
+- 📖 View all entries
+- ✏️ Edit an existing vulnerability
+- ❌ Delete a vulnerability
+- 🚪 Exit
 
 ---
 
 💡 Smart Autofill Features
 
 During report generation:
-	•	You select a vulnerability from an autocomplete list
-	•	If the entry exists in JSON → description, impact, remediation, and CWE-ID auto-fill
-	•	Otherwise, you enter manually and can choose to save it
+- You select a vulnerability from an autocomplete list
+- If the entry exists in JSON → description, impact, remediation, and CWE-ID auto-fill
+- Otherwise, you enter manually and can choose to save it
 
 ---
 
 📦 Output
-	•	Report is generated in .docx format using your template
-	•	Includes:
-	•	Vulnerability summary table
-	•	Detailed findings with screenshots
-	•	Saved inside /reports/ folder
+- Report is generated in .docx format using your template
+Includes:
+- Vulnerability summary table
+- Detailed findings with screenshots
+- Saved inside /reports/ folder
 
 ---
 
