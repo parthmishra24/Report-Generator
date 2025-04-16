@@ -5,6 +5,31 @@ import questionary
 from pyfiglet import Figlet
 from colorama import init, Fore, Style
 
+from colorama import Fore, Style
+
+def color_status(status):
+    status = status.lower()
+    if status == 'open':
+        return Fore.RED + status.capitalize() + Style.RESET_ALL
+    elif status == 'fixed':
+        return Fore.GREEN + status.capitalize() + Style.RESET_ALL
+    elif status == 'validated':
+        return Fore.CYAN + status.capitalize() + Style.RESET_ALL
+    return status
+
+
+def color_severity(severity):
+    severity = severity.lower()
+    if severity == 'critical':
+        return Fore.LIGHTBLACK_EX + severity.capitalize() + Style.RESET_ALL
+    elif severity == 'high':
+        return Fore.RED + severity.capitalize() + Style.RESET_ALL
+    elif severity == 'medium':
+        return Fore.YELLOW + severity.capitalize() + Style.RESET_ALL
+    elif severity == 'low':
+        return Fore.GREEN + severity.capitalize() + Style.RESET_ALL
+    return severity
+
 from style import custom_style
 from vuln_input_handler import collect_vulnerabilities
 from docx_report_generator import generate_docx_report
@@ -36,12 +61,17 @@ def parse_csv(csv_path):
 init(autoreset=True)
 
 def print_banner():
+    terminal_width = shutil.get_terminal_size().columns
     f = Figlet(font='slant')
     banner = f.renderText("SnortGen")
-    terminal_width = shutil.get_terminal_size().columns
+    
+    # Print banner centered with color
     for line in banner.splitlines():
         print(Fore.CYAN + Style.BRIGHT + line.center(terminal_width))
-    print(Fore.YELLOW + Style.BRIGHT + "by Parth Mishra".center(terminal_width) + "\n")
+    
+    print(Fore.YELLOW + Style.BRIGHT + "by Parth Mishra".center(terminal_width))
+    print(Fore.MAGENTA + "🔐 CLI VAPT Report Generator".center(terminal_width))
+    print(Fore.WHITE + "────────────────────────────────────────────────────────".center(terminal_width))
 
 def prompt_template_path():
     while True:
@@ -75,12 +105,23 @@ def main():
         template_path = prompt_template_path()
         vulns = collect_vulnerabilities()
         if vulns:
-            print("\n📋 Vulnerability Summary:")
+            print("╭────┬──────────────────────────────┬──────────────┬────────────╮")
+            print("│ No │ Vulnerability                │ Severity     │ Status     │")
+            print("├────┼──────────────────────────────┼──────────────┼────────────┤")
             for i, v in enumerate(vulns, 1):
-                print(f"\n{i}. {v['name']} ({v['severity']})")
-                print(f"   Affected URL: {v['affected_url']}")
-                print(f"   CWE: {v['cwe_id']}")
-                print(f"   Status: {v['status']}")
+                name = v['name'][:28].ljust(28)
+                sev_text = v['severity'].capitalize().ljust(12)
+                stat_text = v['status'].capitalize().ljust(10)
+    
+                colored_severity = color_severity(sev_text)
+                colored_status = color_status(stat_text)
+    
+                print(f"│ {str(i).rjust(2)} │ {name} │ {colored_severity} │ {colored_status} │")
+                print("╰────┴──────────────────────────────┴──────────────┴────────────╯")
+
+                
+                
+                
             confirm = questionary.confirm("📝 Proceed to generate the report?", style=custom_style).ask()
             if not confirm:
                 print("❌ Report generation cancelled.")
